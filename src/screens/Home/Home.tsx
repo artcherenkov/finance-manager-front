@@ -3,7 +3,7 @@ import { Text } from "react-native";
 
 import * as Styled from "./Home.styled";
 
-const Home = () => {
+const HomeScreen = () => {
   return (
     <Styled.Root>
       <Text>Home page</Text>
@@ -11,4 +11,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomeScreen;
