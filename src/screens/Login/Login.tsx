@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../types/navigator";
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
 import AuthForm, {
   SubmitContainer,
@@ -9,39 +11,99 @@ import AuthForm, {
 } from "../../components/AuthForm";
 import TextField from "../../components/ui/TextField/TextField";
 import SubmitButton from "../../components/AuthForm/components/SubmitButton/SubmitButton";
-
+import { RootStackParamList } from "../../types/navigator";
 import * as Styled from "./Login.styled";
+
+const MIN_PASSWORD_LENGTH = 8;
+const MAX_PASSWORD_LENGTH = 25;
 
 type TLoginScreen = NativeStackScreenProps<RootStackParamList, "Register">;
 
-const LoginScreen = ({ navigation }: TLoginScreen) => {
-  const [value, setValue] = useState("");
-  const [formError] = useState("");
+const schema = yup
+  .object({
+    email: yup.string().email("Enter valid email").required("Required field"),
+    password: yup
+      .string()
+      .min(
+        MIN_PASSWORD_LENGTH,
+        `Must be at least ${MIN_PASSWORD_LENGTH} characters`
+      )
+      .max(
+        MAX_PASSWORD_LENGTH,
+        `Must be at most ${MAX_PASSWORD_LENGTH} characters`
+      )
+      .required("Required field"),
+  })
+  .required();
 
-  const onChangeModePress = () => navigation.navigate("Register");
+const LoginScreen = ({ navigation }: TLoginScreen) => {
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors, isValid },
+  } = useForm({
+    mode: "onChange",
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    resolver: yupResolver(schema),
+  });
+
+  const onSubmit = (data: { email: string; password: string }) => {
+    console.log(data);
+  };
+
+  const onChangeModePress = () => {
+    reset();
+    navigation.navigate("Register");
+  };
 
   return (
     <Styled.Root>
-      <AuthForm title="Login" error={formError}>
-        <TextField
-          label="Email"
-          error=""
-          keyboardType="email-address"
-          placeholder="Enter your email"
-          onChangeText={setValue}
-          value={value}
+      <AuthForm title="Login">
+        <Controller
+          name="email"
+          control={control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextField
+              label="Email"
+              error={errors.email ? errors.email.message : ""}
+              keyboardType="email-address"
+              placeholder="Enter your email"
+              autoCapitalize="none"
+              autoCorrect={false}
+              spellCheck={false}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+            />
+          )}
         />
-        <TextField
-          label="Password"
-          error=""
-          lastChild
-          secureTextEntry
-          placeholder="Enter your password"
-          onChangeText={setValue}
-          value={value}
+
+        <Controller
+          name="password"
+          control={control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextField
+              label="Password"
+              error={errors.password ? errors.password.message : ""}
+              lastChild
+              secureTextEntry
+              placeholder="Enter your password"
+              maxLength={MAX_PASSWORD_LENGTH}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+            />
+          )}
         />
+
         <SubmitContainer>
-          <SubmitButton onPress={() => null}>Login</SubmitButton>
+          <SubmitButton onPress={handleSubmit(onSubmit)} disabled={!isValid}>
+            Login
+          </SubmitButton>
           <ChangeModeText>Don&apos;t have an account?</ChangeModeText>
           <Button title="Register" onPress={onChangeModePress} />
         </SubmitContainer>

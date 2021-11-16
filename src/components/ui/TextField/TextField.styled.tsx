@@ -2,12 +2,18 @@ import styled, { css } from "styled-components/native";
 import { TextInput as DefaultTextInput } from "react-native";
 import { Color } from "../../../const";
 
-export const TextInput = styled(DefaultTextInput)`
-  border: 1px solid ${Color.DARK900};
-  padding: 9px;
+export const TextInput = styled(DefaultTextInput)<{ isFocused?: boolean }>`
+  border: 1px solid ${Color.DARK400};
+  padding: 10px;
   border-radius: 5px;
   font-size: 14px;
   line-height: 16px;
+
+  ${(props) =>
+    props.isFocused &&
+    css`
+      border-color: ${Color.BLUE};
+    `};
 `;
 export const Container = styled.View<{ lastChild?: boolean }>`
   margin-bottom: 8px;
