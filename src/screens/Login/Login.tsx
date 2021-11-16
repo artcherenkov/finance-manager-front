@@ -68,7 +68,7 @@ const LoginScreen = ({ navigation }: TLoginScreen) => {
           control={control}
           render={({ field: { onChange, onBlur, value } }) => (
             <TextField
-              label="Email"
+              label="Email:"
               error={errors.email ? errors.email.message : ""}
               keyboardType="email-address"
               placeholder="Enter your email"
@@ -87,7 +87,7 @@ const LoginScreen = ({ navigation }: TLoginScreen) => {
           control={control}
           render={({ field: { onChange, onBlur, value } }) => (
             <TextField
-              label="Password"
+              label="Password:"
               error={errors.password ? errors.password.message : ""}
               lastChild
               secureTextEntry
