@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleProp, TextStyle } from "react-native";
+import { View, StyleProp, TextStyle } from "react-native";
 
 import * as Styled from "./AuthForm.styled";
 import ErrorMessage from "../ui/ErrorMessage/ErrorMessage";
@@ -17,13 +17,13 @@ interface IAuthForm {
 
 const AuthForm = ({ children, title, error }: IAuthForm) => {
   return (
-    <Styled.Root>
-      <Styled.TitleContainer>
+    <View>
+      <View>
         <Styled.Title>{title}</Styled.Title>
         <ErrorMessage style={ERROR_STYLES}>{error}</ErrorMessage>
-      </Styled.TitleContainer>
+      </View>
       {children}
-    </Styled.Root>
+    </View>
   );
 };
 

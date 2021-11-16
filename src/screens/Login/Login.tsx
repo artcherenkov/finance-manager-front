@@ -3,8 +3,12 @@ import { Button } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../types/navigator";
 
-import AuthForm from "../../components/AuthForm/AuthForm";
+import AuthForm, {
+  SubmitContainer,
+  ChangeModeText,
+} from "../../components/AuthForm";
 import TextField from "../../components/ui/TextField/TextField";
+import SubmitButton from "../../components/AuthForm/components/SubmitButton/SubmitButton";
 
 import * as Styled from "./Login.styled";
 
@@ -36,8 +40,12 @@ const LoginScreen = ({ navigation }: TLoginScreen) => {
           onChangeText={setValue}
           value={value}
         />
+        <SubmitContainer>
+          <SubmitButton onPress={() => null}>Login</SubmitButton>
+          <ChangeModeText>Don&apos;t have an account?</ChangeModeText>
+          <Button title="Register" onPress={onChangeModePress} />
+        </SubmitContainer>
       </AuthForm>
-      <Button onPress={onChangeModePress} title="to register page" />
     </Styled.Root>
   );
 };
