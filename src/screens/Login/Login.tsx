@@ -13,6 +13,8 @@ import TextField from "../../components/ui/TextField/TextField";
 import SubmitButton from "../../components/AuthForm/components/SubmitButton/SubmitButton";
 import { RootStackParamList } from "../../types/navigator";
 import * as Styled from "./Login.styled";
+import { useAppDispatch } from "../../store/hooks";
+import { login } from "../../store/slices/user";
 
 const MIN_PASSWORD_LENGTH = 8;
 const MAX_PASSWORD_LENGTH = 25;
@@ -37,6 +39,8 @@ const schema = yup
   .required();
 
 const LoginScreen = ({ navigation }: TLoginScreen) => {
+  const dispatch = useAppDispatch();
+
   const {
     handleSubmit,
     control,
@@ -52,7 +56,7 @@ const LoginScreen = ({ navigation }: TLoginScreen) => {
   });
 
   const onSubmit = (data: { email: string; password: string }) => {
-    console.log(data);
+    dispatch(login(data));
   };
 
   const onChangeModePress = () => {

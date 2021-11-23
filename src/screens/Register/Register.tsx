@@ -13,6 +13,8 @@ import TextField from "../../components/ui/TextField/TextField";
 import SubmitButton from "../../components/AuthForm/components/SubmitButton/SubmitButton";
 import { RootStackParamList } from "../../types/navigator";
 import * as Styled from "./Register.styled";
+import { register } from "../../store/slices/user";
+import { useAppDispatch } from "../../store/hooks";
 
 const MIN_PASSWORD_LENGTH = 8;
 const MAX_PASSWORD_LENGTH = 25;
@@ -35,11 +37,14 @@ const schema = yup
       .required("Required field"),
     confirmPassword: yup
       .string()
+      .required()
       .oneOf([yup.ref("password"), "", null], "Passwords must match"),
   })
   .required();
 
 const RegisterScreen = ({ navigation }: TRegisterScreen) => {
+  const dispatch = useAppDispatch();
+
   const {
     handleSubmit,
     control,
@@ -60,7 +65,8 @@ const RegisterScreen = ({ navigation }: TRegisterScreen) => {
     password: string;
     confirmPassword: string;
   }) => {
-    console.log(data);
+    const { email, password } = data;
+    dispatch(register({ email, password }));
   };
 
   const onChangeModePress = () => {
