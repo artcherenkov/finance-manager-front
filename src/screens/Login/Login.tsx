@@ -13,8 +13,12 @@ import TextField from "../../components/ui/TextField/TextField";
 import SubmitButton from "../../components/AuthForm/components/SubmitButton/SubmitButton";
 import { RootStackParamList } from "../../types/navigator";
 import * as Styled from "./Login.styled";
-import { useAppDispatch } from "../../store/hooks";
-import { login } from "../../store/slices/user";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import {
+  login,
+  selectLoginError,
+  selectLoginLoading,
+} from "../../store/slices/user";
 
 const MIN_PASSWORD_LENGTH = 8;
 const MAX_PASSWORD_LENGTH = 25;
@@ -41,6 +45,9 @@ const schema = yup
 const LoginScreen = ({ navigation }: TLoginScreen) => {
   const dispatch = useAppDispatch();
 
+  const loginLoading = useAppSelector(selectLoginLoading);
+  const loginError = useAppSelector(selectLoginError);
+
   const {
     handleSubmit,
     control,
@@ -49,8 +56,8 @@ const LoginScreen = ({ navigation }: TLoginScreen) => {
   } = useForm({
     mode: "onChange",
     defaultValues: {
-      email: "",
-      password: "",
+      email: "testttt@test.com",
+      password: "somepass",
     },
     resolver: yupResolver(schema),
   });
@@ -66,7 +73,7 @@ const LoginScreen = ({ navigation }: TLoginScreen) => {
 
   return (
     <Styled.Root>
-      <AuthForm title="Login">
+      <AuthForm title="Login" error={loginError}>
         <Controller
           name="email"
           control={control}
@@ -105,11 +112,19 @@ const LoginScreen = ({ navigation }: TLoginScreen) => {
         />
 
         <SubmitContainer>
-          <SubmitButton onPress={handleSubmit(onSubmit)} disabled={!isValid}>
+          <SubmitButton
+            onPress={handleSubmit(onSubmit)}
+            disabled={!isValid}
+            loading={loginLoading}
+          >
             Login
           </SubmitButton>
           <ChangeModeText>Don&apos;t have an account?</ChangeModeText>
-          <Button title="Register" onPress={onChangeModePress} />
+          <Button
+            disabled={loginLoading}
+            title="Register"
+            onPress={onChangeModePress}
+          />
         </SubmitContainer>
       </AuthForm>
     </Styled.Root>

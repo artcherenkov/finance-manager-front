@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleProp, TextStyle, ScrollView } from "react-native";
+import { StyleProp, TextStyle, ScrollView } from "react-native";
 
 import * as Styled from "./AuthForm.styled";
 import ErrorMessage from "../ui/ErrorMessage/ErrorMessage";
@@ -18,10 +18,10 @@ interface IAuthForm {
 const AuthForm = ({ children, title, error }: IAuthForm) => {
   return (
     <ScrollView>
-      <View>
+      <Styled.TitleWrapper>
         <Styled.Title>{title}</Styled.Title>
         <ErrorMessage style={ERROR_STYLES}>{error}</ErrorMessage>
-      </View>
+      </Styled.TitleWrapper>
       {children}
     </ScrollView>
   );

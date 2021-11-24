@@ -5,7 +5,7 @@ export const Button = styled.Pressable<{ pressed?: boolean }>`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  padding: 10px;
+  padding: 14px;
   border-radius: 10px;
   background-color: ${Color.BLUE};
 

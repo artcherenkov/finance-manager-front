@@ -10,11 +10,9 @@ interface IAuthState {
   };
   isAuthenticated: boolean;
 
-  loginSuccess: boolean;
   loginLoading: boolean;
   loginError: string;
 
-  registerSuccess: boolean;
   registerLoading: boolean;
   registerError: string;
 
@@ -28,11 +26,9 @@ const initialState: IAuthState = {
   },
   isAuthenticated: false,
 
-  loginSuccess: false,
   loginLoading: false,
   loginError: "",
 
-  registerSuccess: false,
   registerLoading: false,
   registerError: "",
 
@@ -53,8 +49,8 @@ export const getUserInfo = createAsyncThunk<
   return api
     .getUserInfo()
     .then(({ data }) => data)
-    .catch(() => {
-      const errorMsg = "An error occurred";
+    .catch((err) => {
+      const errorMsg = err.message || "An error occurred";
       return rejectWithValue(errorMsg);
     });
 });
@@ -69,8 +65,8 @@ export const login = createAsyncThunk<
     .then(() => {
       dispatch(getUserInfo());
     })
-    .catch(() => {
-      const errorMsg = "An error occurred";
+    .catch((err) => {
+      const errorMsg = err.message || "An error occurred";
       return rejectWithValue(errorMsg);
     });
 });
@@ -89,8 +85,7 @@ export const register = createAsyncThunk<
       dispatch(getUserInfo());
     })
     .catch((err) => {
-      console.log(err);
-      const errorMsg = "An error occurred";
+      const errorMsg = err.message || "An error occurred";
       return rejectWithValue(errorMsg);
     });
 });
@@ -112,9 +107,9 @@ export const user = createSlice({
     builder.addCase(login.fulfilled, (state) => {
       state.loginLoading = false;
       state.loginError = "";
-      state.loginSuccess = true;
     });
     builder.addCase(login.rejected, (state, action) => {
+      console.log(action.payload);
       state.loginLoading = false;
       state.loginError = action.payload || "Unknown Error";
     });
@@ -123,10 +118,9 @@ export const user = createSlice({
       state.registerLoading = true;
       state.registerError = "";
     });
-    builder.addCase(register.fulfilled, (state, action) => {
+    builder.addCase(register.fulfilled, (state) => {
       state.registerLoading = false;
       state.registerError = "";
-      state.registerSuccess = true;
     });
     builder.addCase(register.rejected, (state, action) => {
       state.registerLoading = false;
@@ -160,6 +154,20 @@ export const selectIsAuthenticated = (state: RootState) => {
 };
 export const selectUserInfoLoading = (state: RootState) => {
   return state.user.userInfoLoading;
+};
+
+export const selectLoginLoading = (state: RootState) => {
+  return state.user.loginLoading;
+};
+export const selectLoginError = (state: RootState) => {
+  return state.user.loginError;
+};
+
+export const selectRegisterLoading = (state: RootState) => {
+  return state.user.registerLoading;
+};
+export const selectRegisterError = (state: RootState) => {
+  return state.user.registerError;
 };
 
 const { actions, reducer } = user;

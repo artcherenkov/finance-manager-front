@@ -1,12 +1,18 @@
 import React, { useState } from "react";
-import { PressableProps, GestureResponderEvent } from "react-native";
+import {
+  PressableProps,
+  GestureResponderEvent,
+  ActivityIndicator,
+} from "react-native";
 
 import * as Styled from "./SubmitButton.styled";
 
-interface ISubmitButton extends PressableProps {}
+interface ISubmitButton extends PressableProps {
+  loading?: boolean;
+}
 
 const SubmitButton = (props: ISubmitButton) => {
-  const { children, onPressIn, onPressOut, disabled, ...rest } = props;
+  const { children, onPressIn, onPressOut, disabled, loading, ...rest } = props;
 
   const [pressed, setPressed] = useState(false);
 
@@ -27,12 +33,16 @@ const SubmitButton = (props: ISubmitButton) => {
   return (
     <Styled.Button
       pressed={pressed}
-      disabled={disabled}
+      disabled={disabled || loading}
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
       {...rest}
     >
-      <Styled.Text>{children}</Styled.Text>
+      {loading ? (
+        <ActivityIndicator color="white" style={{ paddingTop: 1 }} />
+      ) : (
+        <Styled.Text>{children}</Styled.Text>
+      )}
     </Styled.Button>
   );
 };

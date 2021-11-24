@@ -1,6 +1,10 @@
 import styled from "styled-components/native";
 import { Color } from "../../const";
 
+export const TitleWrapper = styled.View`
+  margin-bottom: 16px;
+`;
+
 export const Title = styled.Text`
   font-size: 20px;
   line-height: 23px;

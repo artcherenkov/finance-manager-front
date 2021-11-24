@@ -1,5 +1,5 @@
 import * as SecureStore from "expo-secure-store";
-const API_URL = "http://localhost:3030";
+const API_URL = "https://temp.movies-explorer.online";
 
 const HEADERS = {
   "Content-Type": "application/json",
@@ -20,11 +20,13 @@ export const deleteValue = async (key: string) => {
   await SecureStore.deleteItemAsync(key);
 };
 
-export const getResponseData = (res: Response) => {
+export const getResponseData = async (res: Response) => {
   if (res.ok) {
     return res.json();
   }
-  return Promise.reject(new Error(`Ошибка: ${res.status}`));
+
+  const data = await res.json();
+  return Promise.reject(new Error(data.message));
 };
 
 export const login = ({ email = "", password = "" }) =>
