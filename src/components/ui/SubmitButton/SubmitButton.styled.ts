@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components/native";
-import { Color } from "../../../../const";
+import { Color } from "../../../const";
 
 export const Button = styled.Pressable<{ pressed?: boolean }>`
   flex-direction: row;

@@ -9,14 +9,23 @@ import ErrorMessage from "../ErrorMessage/ErrorMessage";
 
 import * as Styled from "./TextField.styled";
 
-interface ITextField extends TextInputProps {
+export interface ITextFieldProps extends TextInputProps {
   label?: string;
   error?: string;
   lastChild?: boolean;
+  inputComponent?: React.ReactNode;
 }
 
-const TextField = (props: ITextField) => {
-  const { label, error, lastChild, onFocus, onBlur, ...inputProps } = props;
+const TextField = (props: ITextFieldProps) => {
+  const {
+    label,
+    error,
+    lastChild,
+    onFocus,
+    onBlur,
+    inputComponent,
+    ...inputProps
+  } = props;
 
   const [isFocused, setIsFocused] = useState(false);
 
@@ -36,13 +45,15 @@ const TextField = (props: ITextField) => {
   return (
     <Styled.Container lastChild={lastChild}>
       {label && <Styled.Label>{label}</Styled.Label>}
-      <Styled.TextInput
-        onBlur={handleBlur}
-        onFocus={handleFocus}
-        isFocused={isFocused}
-        {...inputProps}
-        placeholderTextColor={Color.DARK400}
-      />
+      {inputComponent || (
+        <Styled.TextInput
+          onBlur={handleBlur}
+          onFocus={handleFocus}
+          isFocused={isFocused}
+          {...inputProps}
+          placeholderTextColor={Color.DARK400}
+        />
+      )}
 
       <ErrorMessage>{error}</ErrorMessage>
     </Styled.Container>

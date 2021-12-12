@@ -10,7 +10,7 @@ import AuthForm, {
   ChangeModeText,
 } from "../../components/AuthForm";
 import TextField from "../../components/ui/TextField/TextField";
-import SubmitButton from "../../components/AuthForm/components/SubmitButton/SubmitButton";
+import SubmitButton from "../../components/ui/SubmitButton/SubmitButton";
 import { RootStackParamList } from "../../types/navigator";
 import * as Styled from "./Login.styled";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
