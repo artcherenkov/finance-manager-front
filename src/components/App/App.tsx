@@ -54,6 +54,7 @@ const Router = () => {
             name="Main"
             component={HomeScreen}
             options={{
+              title: "",
               headerRight: () => (
                 <TouchableOpacity onPress={() => dispatch(logout())}>
                   <Text>Logout</Text>

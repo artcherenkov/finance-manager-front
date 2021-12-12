@@ -54,7 +54,7 @@ const RegisterScreen = ({ navigation }: TRegisterScreen) => {
   } = useForm({
     mode: "onChange",
     defaultValues: {
-      email: "test@test.com",
+      email: "test@test.com", // test2020
       password: "somepass",
       confirmPassword: "somepass",
     },

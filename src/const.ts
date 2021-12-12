@@ -8,3 +8,5 @@ export const Color = {
 
   BLUE: "#357ded",
 };
+
+export const FONT = "Roboto, Verdana, sans-serif";
