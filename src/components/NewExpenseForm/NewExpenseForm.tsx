@@ -3,7 +3,7 @@ import * as Styled from "./NewExpenseForm.styled";
 import TextField from "../ui/TextField/TextField";
 import SubmitButton from "../ui/SubmitButton/SubmitButton";
 import Select from "../ui/Select/Select";
-import { Alert } from "react-native";
+import { postExpense } from "../../utils/api";
 
 interface INewExpenseForm {
   /** например, заголовок формы */
@@ -11,14 +11,20 @@ interface INewExpenseForm {
 }
 
 const NewExpenseForm = ({ children }: INewExpenseForm) => {
+  const [type, setType] = useState("House");
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
-  const [type, setType] = useState("House");
 
   const isFormValid = useMemo(
     () => title.length > 0 && +amount > 0,
     [title, amount]
   );
+
+  const onFormSubmit = () => {
+    postExpense({ type, title, amount: +amount })
+      .then((data) => console.log(data))
+      .catch((err) => console.log(err));
+  };
 
   return (
     <Styled.Root>
@@ -37,12 +43,7 @@ const NewExpenseForm = ({ children }: INewExpenseForm) => {
         placeholder="Enter amount of money"
         keyboardType="number-pad"
       />
-      <SubmitButton
-        disabled={!isFormValid}
-        onPress={() =>
-          Alert.alert(`type: ${type}\ntitle: ${title}\namount: ${amount}`)
-        }
-      >
+      <SubmitButton disabled={!isFormValid} onPress={onFormSubmit}>
         Add
       </SubmitButton>
     </Styled.Root>

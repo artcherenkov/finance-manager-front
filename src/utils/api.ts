@@ -1,5 +1,5 @@
 import * as SecureStore from "expo-secure-store";
-const API_URL = "https://temp.movies-explorer.online";
+const API_URL = "http://localhost:3030";
 
 const HEADERS = {
   "Content-Type": "application/json",
@@ -51,6 +51,24 @@ export const register = ({ email = "", password = "" }) =>
 export const getUserInfo = async () => {
   const token = await getValue("jwt");
   return fetch(`${API_URL}/user`, {
+    headers: { ...HEADERS, Authorization: `Bearer ${token}` },
+  }).then(getResponseData);
+};
+
+export const postExpense = async ({ type = "", title = "", amount = 0 }) => {
+  const token = await getValue("jwt");
+
+  return fetch(`${API_URL}/expenses`, {
+    method: "POST",
+    body: JSON.stringify({ type, title, amount }),
+    headers: { ...HEADERS, Authorization: `Bearer ${token}` },
+  }).then(getResponseData);
+};
+
+export const getExpenses = async () => {
+  const token = await getValue("jwt");
+
+  return fetch(`${API_URL}/expenses`, {
     headers: { ...HEADERS, Authorization: `Bearer ${token}` },
   }).then(getResponseData);
 };
