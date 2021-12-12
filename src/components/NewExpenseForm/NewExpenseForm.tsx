@@ -1,16 +1,16 @@
 import React, { useState, useMemo } from "react";
-import * as Styled from "./NewTransactionForm.styled";
+import * as Styled from "./NewExpenseForm.styled";
 import TextField from "../ui/TextField/TextField";
 import SubmitButton from "../ui/SubmitButton/SubmitButton";
 import Select from "../ui/Select/Select";
 import { Alert } from "react-native";
 
-interface INewTransactionForm {
+interface INewExpenseForm {
   /** например, заголовок формы */
   children: React.ReactNode;
 }
 
-const NewTransactionForm = ({ children }: INewTransactionForm) => {
+const NewExpenseForm = ({ children }: INewExpenseForm) => {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [type, setType] = useState("House");
@@ -28,7 +28,7 @@ const NewTransactionForm = ({ children }: INewTransactionForm) => {
         label="Title"
         value={title}
         onChangeText={setTitle}
-        placeholder="Enter transaction title"
+        placeholder="Enter expense title"
       />
       <TextField
         label="Amount of money"
@@ -49,4 +49,4 @@ const NewTransactionForm = ({ children }: INewTransactionForm) => {
   );
 };
 
-export default NewTransactionForm;
+export default NewExpenseForm;

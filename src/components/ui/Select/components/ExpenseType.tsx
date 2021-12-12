@@ -24,7 +24,7 @@ export const Text = styled.Text`
   margin-left: 10px;
 `;
 
-interface ITransactionTypeProps extends TouchableOpacityProps {
+interface IExpenseTypeProps extends TouchableOpacityProps {
   /** заголовок типа траты */
   text: string;
 
@@ -32,7 +32,7 @@ interface ITransactionTypeProps extends TouchableOpacityProps {
   mb?: boolean;
 }
 
-const TransactionType = (props: ITransactionTypeProps) => {
+const ExpenseType = (props: IExpenseTypeProps) => {
   const { mb, text, ...rest } = props;
 
   return (
@@ -43,4 +43,4 @@ const TransactionType = (props: ITransactionTypeProps) => {
   );
 };
 
-export default TransactionType;
+export default ExpenseType;

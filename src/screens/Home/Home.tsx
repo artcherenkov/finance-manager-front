@@ -2,8 +2,8 @@ import React from "react";
 
 import DailyAdvice from "../../components/DailyAdvice/DailyAdvice";
 import * as Styled from "./Home.styled";
-import TransactionHistory from "../../components/TransactionHistory/TransactionHistory";
-import NewTransactionForm from "../../components/NewTransactionForm/NewTransactionForm";
+import ExpenseHistory from "../../components/ExpenseHistory/ExpenseHistory";
+import NewExpenseForm from "../../components/NewExpenseForm/NewExpenseForm";
 import { Keyboard, TouchableWithoutFeedback, ScrollView } from "react-native";
 
 const HomeScreen = () => {
@@ -12,16 +12,16 @@ const HomeScreen = () => {
       <ScrollView contentContainerStyle={{ justifyContent: "space-between" }}>
         <DailyAdvice />
 
-        <NewTransactionForm>
+        <NewExpenseForm>
           <Styled.Title style={{ marginBottom: 20 }}>
-            Add new transaction
+            Add new expense
           </Styled.Title>
-        </NewTransactionForm>
+        </NewExpenseForm>
 
         <Styled.Title style={{ marginTop: 20, marginBottom: 16 }}>
           History
         </Styled.Title>
-        <TransactionHistory />
+        <ExpenseHistory />
       </ScrollView>
     </TouchableWithoutFeedback>
   );

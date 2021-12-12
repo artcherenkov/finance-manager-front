@@ -3,7 +3,7 @@ import TextField from "../TextField/TextField";
 import { Modal } from "react-native";
 import * as Styled from "./Select.styled";
 import CloseModalButton from "./components/CloseModalButton";
-import TransactionType from "./components/TransactionType";
+import ExpenseType from "./components/ExpenseType";
 
 interface ISelectProps {
   value: string;
@@ -24,35 +24,35 @@ const Select = (props: ISelectProps) => {
   return (
     <>
       <TextField
-        label="Select transaction type"
-        inputComponent={<TransactionType text={value} onPress={handleOpen} />}
+        label="Select expense type"
+        inputComponent={<ExpenseType text={value} onPress={handleOpen} />}
       />
       <Modal visible={open} animationType="slide" onRequestClose={handleClose}>
         <Styled.ModalContent>
           <CloseModalButton onPress={handleClose} />
-          <Styled.ModalTitle>Select transaction type</Styled.ModalTitle>
+          <Styled.ModalTitle>Select expense type</Styled.ModalTitle>
           <Styled.TypesContainer>
-            <TransactionType
+            <ExpenseType
               onPress={() => handleChange("House")}
               text="House"
               mb
             />
-            <TransactionType
+            <ExpenseType
               onPress={() => handleChange("Food")}
               text="Food"
               mb
             />
-            <TransactionType
+            <ExpenseType
               onPress={() => handleChange("Entertainment")}
               text="Entertainment"
               mb
             />
-            <TransactionType
+            <ExpenseType
               onPress={() => handleChange("Credit")}
               text="Credit"
               mb
             />
-            <TransactionType
+            <ExpenseType
               onPress={() => handleChange("Transport")}
               text="Transport"
             />

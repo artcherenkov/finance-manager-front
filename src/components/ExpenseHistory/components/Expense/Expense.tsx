@@ -1,15 +1,15 @@
 import React from "react";
 import { ViewProps } from "react-native";
 
-import * as Styled from "./Transaction.styled";
+import * as Styled from "./Expense.styled";
 import Icon from "../../assets/icon-house";
 
-interface ITransaction extends ViewProps {
+interface IExpense extends ViewProps {
   scale?: number;
   last?: boolean;
 }
 
-const Transaction = ({ scale = 1, last }: ITransaction) => {
+const Expense = ({ scale = 1, last }: IExpense) => {
   return (
     <Styled.Root style={{ transform: [{ scale }] }} last={last}>
       <Icon />
@@ -19,4 +19,4 @@ const Transaction = ({ scale = 1, last }: ITransaction) => {
   );
 };
 
-export default Transaction;
+export default Expense;
