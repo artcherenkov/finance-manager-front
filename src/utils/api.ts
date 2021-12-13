@@ -1,4 +1,5 @@
 import * as SecureStore from "expo-secure-store";
+import { TExpense } from "../types/expense";
 const API_URL = "http://localhost:3030";
 
 const HEADERS = {
@@ -55,17 +56,17 @@ export const getUserInfo = async () => {
   }).then(getResponseData);
 };
 
-export const postExpense = async ({ type = "", title = "", amount = 0 }) => {
+export const postExpense = async (data: TExpense) => {
   const token = await getValue("jwt");
 
   return fetch(`${API_URL}/expenses`, {
     method: "POST",
-    body: JSON.stringify({ type, title, amount }),
+    body: JSON.stringify(data),
     headers: { ...HEADERS, Authorization: `Bearer ${token}` },
   }).then(getResponseData);
 };
 
-export const getExpenses = async () => {
+export const getExpenses = async (): Promise<{ data: TExpense[] }> => {
   const token = await getValue("jwt");
 
   return fetch(`${API_URL}/expenses`, {

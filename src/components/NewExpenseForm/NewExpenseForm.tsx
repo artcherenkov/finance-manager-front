@@ -3,7 +3,8 @@ import * as Styled from "./NewExpenseForm.styled";
 import TextField from "../ui/TextField/TextField";
 import SubmitButton from "../ui/SubmitButton/SubmitButton";
 import Select from "../ui/Select/Select";
-import { postExpense } from "../../utils/api";
+import { useAppDispatch } from "../../store/hooks";
+import { postExpense } from "../../store/slices/data";
 
 interface INewExpenseForm {
   /** например, заголовок формы */
@@ -11,25 +12,22 @@ interface INewExpenseForm {
 }
 
 const NewExpenseForm = ({ children }: INewExpenseForm) => {
+  const dispatch = useAppDispatch();
+
   const [type, setType] = useState("House");
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
 
-  const isFormValid = useMemo(
-    () => title.length > 0 && +amount > 0,
-    [title, amount]
-  );
+  const isFormValid = useMemo(() => +amount > 0, [amount]);
 
   const onFormSubmit = () => {
-    postExpense({ type, title, amount: +amount })
-      .then((data) => console.log(data))
-      .catch((err) => console.log(err));
+    dispatch(postExpense({ type, title: title || type, amount: +amount }));
   };
 
   return (
     <Styled.Root>
       {children}
-      <Select value={type} onChange={(value) => setType(value)} />
+      <Select value={type} onChange={setType} />
       <TextField
         label="Title"
         value={title}
