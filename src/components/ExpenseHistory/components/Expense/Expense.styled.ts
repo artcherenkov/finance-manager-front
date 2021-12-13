@@ -20,6 +20,7 @@ export const Text = styled.Text`
 
 export const Amount = styled.Text`
   width: 70px;
+  font-size: 12px;
   align-self: flex-end;
   text-align: right;
 `;

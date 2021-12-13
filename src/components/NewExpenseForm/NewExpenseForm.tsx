@@ -2,7 +2,7 @@ import React, { useState, useMemo } from "react";
 import * as Styled from "./NewExpenseForm.styled";
 import TextField from "../ui/TextField/TextField";
 import SubmitButton from "../ui/SubmitButton/SubmitButton";
-import Select from "../ui/Select/Select";
+import Select from "./components/Select/Select";
 import { useAppDispatch } from "../../store/hooks";
 import { postExpense } from "../../store/slices/data";
 

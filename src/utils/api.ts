@@ -1,7 +1,6 @@
 import * as SecureStore from "expo-secure-store";
 import { TExpense, TServerExpense } from "../types/expense";
-// const API_URL = "http://51.250.16.78:3000";
-const API_URL = "http://localhost:3030";
+const API_URL = "https://temp.movies-explorer.online";
 
 const HEADERS = {
   "Content-Type": "application/json",

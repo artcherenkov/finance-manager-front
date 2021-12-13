@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { ViewProps } from "react-native";
 
 import * as Styled from "./Expense.styled";
-import Icon from "../../assets/icon-house";
 import { TExpense } from "../../../../types/expense";
+import { ExpenseTypeEnum } from "./Expense.const";
 
 interface IExpenseProps extends ViewProps {
   scale?: number;
@@ -12,14 +12,17 @@ interface IExpenseProps extends ViewProps {
 }
 
 const Expense = ({ scale = 1, last, data }: IExpenseProps) => {
-  console.log(data.createdAt);
+  const expenseType = useMemo(
+    () => ExpenseTypeEnum[data.type.toUpperCase()],
+    [data]
+  );
 
   return (
     <Styled.Root
       style={{ transform: [{ scale }, { translateY: 20 * scale }] }}
       last={last}
     >
-      <Icon />
+      {expenseType.icon}
       <Styled.Text>{data.title}</Styled.Text>
       <Styled.Amount>–${data.amount}</Styled.Amount>
     </Styled.Root>

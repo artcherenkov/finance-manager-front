@@ -62,7 +62,7 @@ const FullHistoryModal = (props: IFullHistoryModalProps) => {
 
   return (
     <Modal {...rest}>
-      <Styled.ContentContainer>
+      <Styled.ContentContainer contentContainerStyle={{ paddingBottom: 35 }}>
         <Styled.Close onPress={onClose}>
           <Styled.CloseText>Close</Styled.CloseText>
         </Styled.Close>

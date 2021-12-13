@@ -1,9 +1,9 @@
-import React from "react";
-import styled, { css } from "styled-components/native";
+import React, { useMemo } from "react";
 import { TouchableOpacityProps } from "react-native";
+import styled, { css } from "styled-components/native";
 
-import { Color } from "../../../../const";
-import Icon from "../assets/icon-house";
+import { Color } from "../../../../../const";
+import { ExpenseTypeEnum } from "../../../../ExpenseHistory/components/Expense/Expense.const";
 
 export const Root = styled.TouchableOpacity<{ mb?: boolean }>`
   width: 100%;
@@ -26,19 +26,24 @@ export const Text = styled.Text`
 
 interface IExpenseTypeProps extends TouchableOpacityProps {
   /** заголовок типа траты */
-  text: string;
+  type: string;
 
   /** нужен ли марджин снизу (mb - margin bottom) */
   mb?: boolean;
 }
 
 const ExpenseType = (props: IExpenseTypeProps) => {
-  const { mb, text, ...rest } = props;
+  const { mb, type, ...rest } = props;
+
+  const expenseType = useMemo(
+    () => ExpenseTypeEnum[type.toUpperCase()],
+    [type]
+  );
 
   return (
     <Root mb={mb} {...rest}>
-      <Icon />
-      <Text>{text}</Text>
+      {expenseType.icon}
+      <Text>{expenseType.text}</Text>
     </Root>
   );
 };

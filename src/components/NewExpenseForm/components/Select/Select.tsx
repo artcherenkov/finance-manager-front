@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import TextField from "../TextField/TextField";
+import TextField from "../../../ui/TextField/TextField";
 import { Modal } from "react-native";
 import * as Styled from "./Select.styled";
 import CloseModalButton from "./components/CloseModalButton";
@@ -25,7 +25,7 @@ const Select = (props: ISelectProps) => {
     <>
       <TextField
         label="Select expense type"
-        inputComponent={<ExpenseType text={value} onPress={handleOpen} />}
+        inputComponent={<ExpenseType type={value} onPress={handleOpen} />}
       />
       <Modal visible={open} animationType="slide" onRequestClose={handleClose}>
         <Styled.ModalContent>
@@ -34,27 +34,23 @@ const Select = (props: ISelectProps) => {
           <Styled.TypesContainer>
             <ExpenseType
               onPress={() => handleChange("House")}
-              text="House"
+              type="House"
               mb
             />
-            <ExpenseType
-              onPress={() => handleChange("Food")}
-              text="Food"
-              mb
-            />
+            <ExpenseType onPress={() => handleChange("Food")} type="Food" mb />
             <ExpenseType
               onPress={() => handleChange("Entertainment")}
-              text="Entertainment"
+              type="Entertainment"
               mb
             />
             <ExpenseType
               onPress={() => handleChange("Credit")}
-              text="Credit"
+              type="Credit"
               mb
             />
             <ExpenseType
               onPress={() => handleChange("Transport")}
-              text="Transport"
+              type="Transport"
             />
           </Styled.TypesContainer>
         </Styled.ModalContent>
