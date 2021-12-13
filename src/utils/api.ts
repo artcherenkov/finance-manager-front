@@ -1,5 +1,6 @@
 import * as SecureStore from "expo-secure-store";
-import { TExpense } from "../types/expense";
+import { TExpense, TServerExpense } from "../types/expense";
+// const API_URL = "http://51.250.16.78:3000";
 const API_URL = "http://localhost:3030";
 
 const HEADERS = {
@@ -66,7 +67,7 @@ export const postExpense = async (data: TExpense) => {
   }).then(getResponseData);
 };
 
-export const getExpenses = async (): Promise<{ data: TExpense[] }> => {
+export const getExpenses = async (): Promise<{ data: TServerExpense[] }> => {
   const token = await getValue("jwt");
 
   return fetch(`${API_URL}/expenses`, {

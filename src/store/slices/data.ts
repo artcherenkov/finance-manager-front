@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "../index";
 import * as api from "../../utils/api";
-import { TExpense } from "../../types/expense";
+import { TExpense, TServerExpense } from "../../types/expense";
 
 interface IDataState {
-  expenses: TExpense[];
+  expenses: TServerExpense[];
   expensesLoading: boolean;
   expensesError: string;
 }
@@ -15,7 +15,7 @@ const initialState: IDataState = {
 };
 
 export const getExpenses = createAsyncThunk<
-  TExpense[],
+  TServerExpense[],
   void,
   { rejectValue: string }
 >("data/get-expenses", (registerData, { rejectWithValue }) => {
@@ -29,7 +29,7 @@ export const getExpenses = createAsyncThunk<
 });
 
 export const postExpense = createAsyncThunk<
-  TExpense,
+  TServerExpense,
   TExpense,
   { rejectValue: string }
 >("data/post-expense", (data, { rejectWithValue }) => {

@@ -1,15 +1,25 @@
-import React from "react";
-import { Keyboard, TouchableWithoutFeedback, ScrollView } from "react-native";
+import React, { useState } from "react";
+import { Keyboard, TouchableWithoutFeedback, View } from "react-native";
 
 import DailyAdvice from "../../components/DailyAdvice/DailyAdvice";
-import * as Styled from "./Home.styled";
 import ExpenseHistory from "../../components/ExpenseHistory/ExpenseHistory";
 import NewExpenseForm from "../../components/NewExpenseForm/NewExpenseForm";
+import * as Styled from "./Home.styled";
+import FullHistoryModal from "./components/FullHistoryModal/FullHistoryModal";
+import { useAppSelector } from "../../store/hooks";
+import { selectExpenses } from "../../store/slices/data";
 
 const HomeScreen = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const expensesCount = useAppSelector(selectExpenses).length;
+
+  const onModalOpen = () => setModalOpen(true);
+  const onModalClose = () => setModalOpen(false);
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <ScrollView contentContainerStyle={{ justifyContent: "space-between" }}>
+      <View>
         <DailyAdvice />
 
         <NewExpenseForm>
@@ -18,11 +28,25 @@ const HomeScreen = () => {
           </Styled.Title>
         </NewExpenseForm>
 
-        <Styled.Title style={{ marginTop: 20, marginBottom: 16 }}>
-          History
-        </Styled.Title>
+        <Styled.HistoryHeader>
+          <Styled.Title style={{ marginTop: 20, marginBottom: 16 }}>
+            History
+          </Styled.Title>
+          {expensesCount > 0 && (
+            <Styled.ShowAll onPress={onModalOpen}>
+              <Styled.ShowAllText>Show all</Styled.ShowAllText>
+            </Styled.ShowAll>
+          )}
+        </Styled.HistoryHeader>
+
         <ExpenseHistory />
-      </ScrollView>
+
+        <FullHistoryModal
+          animationType="slide"
+          visible={modalOpen}
+          onClose={onModalClose}
+        />
+      </View>
     </TouchableWithoutFeedback>
   );
 };

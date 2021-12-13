@@ -11,6 +11,8 @@ interface INewExpenseForm {
   children: React.ReactNode;
 }
 
+const getAmount = (amount: string) => parseFloat(amount.replaceAll(",", "."));
+
 const NewExpenseForm = ({ children }: INewExpenseForm) => {
   const dispatch = useAppDispatch();
 
@@ -18,10 +20,12 @@ const NewExpenseForm = ({ children }: INewExpenseForm) => {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
 
-  const isFormValid = useMemo(() => +amount > 0, [amount]);
+  const isFormValid = useMemo(() => getAmount(amount) > 0, [amount]);
 
   const onFormSubmit = () => {
-    dispatch(postExpense({ type, title: title || type, amount: +amount }));
+    dispatch(
+      postExpense({ type, title: title || type, amount: getAmount(amount) })
+    );
   };
 
   return (
@@ -39,7 +43,7 @@ const NewExpenseForm = ({ children }: INewExpenseForm) => {
         value={amount}
         onChangeText={setAmount}
         placeholder="Enter amount of money"
-        keyboardType="number-pad"
+        keyboardType="numeric"
       />
       <SubmitButton disabled={!isFormValid} onPress={onFormSubmit}>
         Add

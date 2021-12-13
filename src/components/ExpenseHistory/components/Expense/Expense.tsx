@@ -5,13 +5,15 @@ import * as Styled from "./Expense.styled";
 import Icon from "../../assets/icon-house";
 import { TExpense } from "../../../../types/expense";
 
-interface IExpense extends ViewProps {
+interface IExpenseProps extends ViewProps {
   scale?: number;
   last?: boolean;
   data: TExpense;
 }
 
-const Expense = ({ scale = 1, last, data }: IExpense) => {
+const Expense = ({ scale = 1, last, data }: IExpenseProps) => {
+  console.log(data.createdAt);
+
   return (
     <Styled.Root
       style={{ transform: [{ scale }, { translateY: 20 * scale }] }}

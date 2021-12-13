@@ -4,21 +4,21 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Provider } from "react-redux";
 import { store } from "../../store";
 
-import { ActivityIndicator, TouchableOpacity, Text } from "react-native";
+import { ActivityIndicator } from "react-native";
 
 import LoginScreen from "../../screens/Login/Login";
 import RegisterScreen from "../../screens/Register/Register";
 import HomeScreen from "../../screens/Home/Home";
 
 import HeaderText from "../HeaderText/HeaderText";
-import { useAppSelector, useAppDispatch } from "../../store/hooks";
+import { useAppSelector } from "../../store/hooks";
 import {
   selectIsAuthenticated,
   getUserInfo,
   selectUserInfoLoading,
-  logout,
 } from "../../store/slices/user";
 import styled from "styled-components/native";
+import LogoutButton from "../ui/LogoutButton/LogoutButton";
 
 const AUTH_SCREEN_OPTIONS = () => ({
   headerLeft: () => <></>,
@@ -34,7 +34,6 @@ const LoadingContainer = styled.View`
 const Stack = createNativeStackNavigator();
 
 const Router = () => {
-  const dispatch = useAppDispatch();
   const isAuthenticated = useAppSelector(selectIsAuthenticated);
   const userInfoLoading = useAppSelector(selectUserInfoLoading);
 
@@ -55,11 +54,7 @@ const Router = () => {
             component={HomeScreen}
             options={{
               title: "",
-              headerRight: () => (
-                <TouchableOpacity onPress={() => dispatch(logout())}>
-                  <Text>Logout</Text>
-                </TouchableOpacity>
-              ),
+              headerRight: LogoutButton,
             }}
           />
         </Stack.Navigator>
